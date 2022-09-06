@@ -4,6 +4,8 @@ const Sender = require('../models/sender');
 const Parcel = require('../models/parcel');
 const { send } = require('process');
 
+const ObjectId = mongoose.Types.ObjectId;
+
 module.exports = {
     // task 1 - get all parcels from a sender/ get sender by name
     getAll: function (req, res) {
@@ -49,22 +51,20 @@ module.exports = {
     // task 2 - Add Parcel to Sender. The ID of the sender and an object representing the parcel's details are sent through the request's body.
     addParcel: function (req, res) {
 
-        Sender.findOne({ _id: req.body.id }, function (err, sender) {
+        let aParcel = new Parcel(req.body.parcels)
+        Sender.findOne({ _id: ObjectId(req.body._id)}, function (err, sender) {
             if (err) return res.status(400).json(err);
             if (!sender) return res.status(404).json();
             //error 404 not found
 
-            Parcel.findOne({ address: req.body.address },{ weight: req.body.weight },{ fragile: req.body.fragile}, function (err, parcel) {
-                if (err) return res.status(400).json(err);
-                if (!parcel) return res.status(404).json();
-    
-                sender.parcels.push(parcel.address,parcel.weight,parcel.fragile);
-                sender.save(function (err) {
-                    if (err) return res.status(500).json(err);
-    
-                    res.json(sender);
+            aParcel.save(function(err, parcel){
+                sender.parcels.push(aParcel);
+                sender.save(function(err, result){
+                    if(err) return res.json(err);
+                    res.json(result);
                 });
             })
+
         });
     },
 
