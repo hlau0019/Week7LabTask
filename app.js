@@ -1,3 +1,8 @@
+/*
+Student Name: Hiu Lam Lau
+Student id: 32356676
+Subject: FIT2095 Week 7 Lab Task
+*/
 const express = require('express');
 const mongoose = require('mongoose');
 
