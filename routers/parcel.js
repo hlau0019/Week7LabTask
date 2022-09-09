@@ -29,4 +29,16 @@ module.exports = {
             res.json(parcel);
         });
     },
+
+
+    //Extra task
+    updateById: function(req, res){
+
+        Parcel.findOneAndUpdate({_id: req.body._id}, Parcel.weight*10, function(err,parcel){
+            if (err) return res.status(400).json(err);
+            if (!parcel) return res.status(404).json();
+
+            res.json(parcel);
+        })
+    }
 }
