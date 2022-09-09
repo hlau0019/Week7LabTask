@@ -34,8 +34,10 @@ module.exports = {
     //Extra task
     updateById: function(req, res){
 
-        Parcel.find({_id: req.body._id},function(err,parcel){
-            Parcel.findOneAndUpdate(Parcel.weight*10,function(err,parcel){
+        Parcel.findOne({_id: req.body._id},function(err,parcel){
+            let newWeight = parcel.weight+10;
+
+            Parcel.findOneAndUpdate({_id: req.body._id},newWeight,function(err,parcel){
                 if (err) return res.status(400).json(err);
                 if (!parcel) return res.status(404).json();
     
