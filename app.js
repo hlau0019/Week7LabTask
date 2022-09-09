@@ -36,3 +36,4 @@ app.delete('/senders', senders.deleteOne); //task 1 delete
 //Endpointsb-Parcels
 app.get('/parcels', parcels.getAll);
 app.put('/parcels', parcels.updateOne);
+app.put('/parcels/extra', parcels.updateById);
