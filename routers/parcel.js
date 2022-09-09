@@ -35,12 +35,13 @@ module.exports = {
     updateById: function(req, res){
 
         Parcel.findOne({_id: req.body._id},function(err,parcel){
+            if (err) return res.status(400).json(err);
+            if (!parcel) return res.status(404).json();
+
             let newWeight = parcel.weight+10;
 
             Parcel.findOneAndUpdate({_id: req.body._id},{weight:newWeight},function(err,parcel){
-                if (err) return res.status(400).json(err);
-                if (!parcel) return res.status(404).json();
-    
+               
                 res.json(parcel);
             })
         })
